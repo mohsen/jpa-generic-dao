@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	version="2.5">
+	<display-name>Hibernate WebApp Sample</display-name>
+	<description>Hibernate Generic DAO - Hibernate
+		WebApp Sample</description>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:applicationContext.xml</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<servlet>
+		<servlet-name>main</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:main-servlet.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>main</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+
+	<jsp-config>
+		<taglib>
+			<taglib-uri>http://java.sun.com/jstl/fmt</taglib-uri>
+			<taglib-location>/WEB-INF/taglib/fmt.tld</taglib-location>
+		</taglib>
+
+		<taglib>
+			<taglib-uri>http://java.sun.com/jstl/core</taglib-uri>
+			<taglib-location>/WEB-INF/taglib/c.tld</taglib-location>
+		</taglib>
+
+		<taglib>
+			<taglib-uri>http://java.sun.com/jstl/x</taglib-uri>
+			<taglib-location>/WEB-INF/taglib/x.tld</taglib-location>
+		</taglib>
+		
+		<taglib>
+			<taglib-uri>http://www.springframework.org/tags</taglib-uri>
+			<taglib-location>/WEB-INF/taglib/spring.tld</taglib-location>
+		</taglib>
+		
+		<taglib>
+			<taglib-uri>http://www.springframework.org/tags/form</taglib-uri>
+			<taglib-location>/WEB-INF/taglib/spring-form.tld</taglib-location>
+		</taglib>
+		
+		<taglib>
+			<taglib-uri>http://oldworld.genericdao.googlecode.com/tags</taglib-uri>
+			<taglib-location>/WEB-INF/taglib/custom.tld</taglib-location>
+		</taglib>
+	</jsp-config>
+
+	<login-config>
+		<auth-method>BASIC</auth-method>
+	</login-config>
+
+</web-app>

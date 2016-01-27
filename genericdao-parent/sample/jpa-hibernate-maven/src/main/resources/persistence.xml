@@ -1,0 +1,6 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0">
+    <persistence-unit name="test" transaction-type="RESOURCE_LOCAL">
+       <class>sample.googlecode.genericdao.model.Citizen</class>
+       <class>sample.googlecode.genericdao.model.Town</class>
+    </persistence-unit>
+</persistence>

@@ -1,0 +1,48 @@
+a {
+	color: blue;
+}
+
+a.sort_asc:after {
+	content: url(asc.gif);
+}
+
+a.sort_desc:after {
+	content: url(desc.gif);
+}
+
+.disabledLink {
+	color: gray;
+	text-decoration: underline;
+}
+
+table {
+	border-left: 1px solid gray;
+	border-right: 1px solid gray;
+	border-top: 1px solid gray;
+	border-bottom: 1px solid gray;
+}
+
+th {
+	border-bottom: 2px solid gray;
+	background-color: #f9f9f9;
+	padding: 1px 3px;
+}
+
+td {
+	border-bottom: 1px solid gray;
+	border-right: 1px dotted silver;
+	padding: 1px 3px;
+}
+
+.navigation {
+	border-bottom: 1px solid gray;
+}
+
+.navigation span {
+	font-weight: bold;
+}
+
+.filters {
+	border: 1px solid gray;
+	padding: 6px 2px;
+}

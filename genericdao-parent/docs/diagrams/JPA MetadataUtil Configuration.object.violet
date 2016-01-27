@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<java version="1.6.0_20" class="java.beans.XMLDecoder"> 
+ <object class="com.horstmann.violet.ObjectDiagramGraph"> 
+  <void method="addNode"> 
+   <object id="ObjectNode0" class="com.horstmann.violet.ObjectNode"> 
+    <void property="name"> 
+     <void property="text"> 
+      <string>HibernateMetadataUtil</string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>92.0</double> 
+     <double>81.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object id="ObjectNode1" class="com.horstmann.violet.ObjectNode"> 
+    <void property="name"> 
+     <void property="text"> 
+      <string>HibernateEntityManagerFactory</string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>294.0</double> 
+     <double>75.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object class="com.horstmann.violet.ObjectNode"> 
+    <void property="name"> 
+     <void property="text"> 
+      <string>JPAAnnotationMetadataUtil</string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>94.0</double> 
+     <double>181.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="connect"> 
+   <object class="com.horstmann.violet.ObjectRelationshipEdge"> 
+    <void property="endArrowHead"> 
+     <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/> 
+    </void> 
+   </object> 
+   <object idref="ObjectNode0"/> 
+   <object idref="ObjectNode1"/> 
+  </void> 
+ </object> 
+</java> 

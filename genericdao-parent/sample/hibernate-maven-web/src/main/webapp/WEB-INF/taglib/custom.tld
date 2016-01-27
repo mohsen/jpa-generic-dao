@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib version="2.0" xmlns="http://java.sun.com/xml/ns/j2ee"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd">
+ <description>JSTL 1.1 functions library</description>
+ <display-name>JSTL functions</display-name>
+ <tlib-version>1.1</tlib-version>
+ <short-name>myfn</short-name>
+ <uri>http://oldworld.genericdao.googlecode.com/tags</uri>
+ <tag>
+  <description>A tag that creates a link and copies search parameters from the request to URL parameters on the link. Thus the search parameters will again be passed in the next request when the link is followed.</description>
+  <name>a</name>
+  <tag-class>sample.googlecode.genericdao.oldworld.webhelps.PreserveSearchLinkTag</tag-class>
+  <body-content>JSP</body-content>
+  <attribute>
+   <name>href</name>
+   <required>true</required>
+   <rtexprvalue>true</rtexprvalue>
+   <type>java.lang.String</type>
+  </attribute>
+  <attribute>
+   <name>styleClass</name>
+   <rtexprvalue>true</rtexprvalue>
+   <type>java.lang.String</type>
+  </attribute>
+  <attribute>
+   <name>style</name>
+   <rtexprvalue>true</rtexprvalue>
+   <type>java.lang.String</type>
+  </attribute>
+  <attribute>
+   <name>target</name>
+   <rtexprvalue>true</rtexprvalue>
+   <type>java.lang.String</type>
+  </attribute>
+  <attribute>
+   <name>title</name>
+   <rtexprvalue>true</rtexprvalue>
+   <type>java.lang.String</type>
+  </attribute>
+  <attribute>
+   <name>disabled</name>
+   <rtexprvalue>true</rtexprvalue>
+   <type>boolean</type>
+  </attribute>
+  <attribute>
+   <name>includeSorts</name>
+   <rtexprvalue>true</rtexprvalue>
+   <type>boolean</type>
+  </attribute>
+  <attribute>
+   <name>includeFilters</name>
+   <rtexprvalue>true</rtexprvalue>
+   <type>boolean</type>
+  </attribute>
+  <attribute>
+   <name>includePaging</name>
+   <rtexprvalue>true</rtexprvalue>
+   <type>boolean</type>
+  </attribute>
+ </tag>
+ <tag>
+  <description>Link to be used for sorting in a table header. It checks the request parameters to see if a sort is currently active on the given path. If so it applies either the sort_asc or sort_desc class to the link. Clicking the link will reload the page with the given path specified as the sort parameter. Any other search parameters (i.e. filters, paging) are preserved by this link.</description>
+  <name>sort</name>
+  <tag-class>sample.googlecode.genericdao.oldworld.webhelps.SortTag</tag-class>
+  <body-content>JSP</body-content>
+  <attribute>
+   <name>path</name>
+   <required>true</required>
+   <rtexprvalue>true</rtexprvalue>
+   <type>java.lang.String</type>
+  </attribute>
+  <attribute>
+   <name>styleClass</name>
+   <rtexprvalue>true</rtexprvalue>
+   <type>java.lang.String</type>
+  </attribute>
+  <attribute>
+   <name>style</name>
+   <rtexprvalue>true</rtexprvalue>
+   <type>java.lang.String</type>
+  </attribute>
+  <attribute>
+   <name>title</name>
+   <rtexprvalue>true</rtexprvalue>
+   <type>java.lang.String</type>
+  </attribute>
+ </tag>
+ <tag>
+  <description>A tag that copies search parameters from the request to hidden form inputs. Thus the search parameters will again be passed in the next request when the form is submitted.</description>
+  <name>searchToInputs</name>
+  <tag-class>sample.googlecode.genericdao.oldworld.webhelps.PreserveSearchInputsTag</tag-class>
+  <body-content>empty</body-content>
+  <attribute>
+   <name>includeSorts</name>
+   <rtexprvalue>true</rtexprvalue>
+   <type>boolean</type>
+  </attribute>
+  <attribute>
+   <name>includeFilters</name>
+   <rtexprvalue>true</rtexprvalue>
+   <type>boolean</type>
+  </attribute>
+  <attribute>
+   <name>includePaging</name>
+   <rtexprvalue>true</rtexprvalue>
+   <type>boolean</type>
+  </attribute>
+ </tag>
+ <function>
+  <description>Returns the value of the given constant (i.e. public static field)</description>
+  <name>const</name>
+  <function-class>sample.googlecode.genericdao.oldworld.webhelps.Util</function-class>
+  <function-signature>Object getConstant(java.lang.String)</function-signature>
+  <example>${m:const('java.lang.Double.NaN')}</example>
+ </function>
+</taglib>

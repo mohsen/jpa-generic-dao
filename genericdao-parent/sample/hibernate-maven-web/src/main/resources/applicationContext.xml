@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+	<!-- Use annotations (@Autowired) for property injection -->
+	<context:annotation-config />
+
+	<!--
+		Spring will find all of our service and DAO components because they
+		have @Service and @Repository annotations. We do not need to configure
+		them in XML
+	-->
+	<context:component-scan base-package="sample.googlecode.genericdao.oldworld.service" />
+	<context:component-scan base-package="sample.googlecode.genericdao.oldworld.dao" />
+
+	<context:property-placeholder location="classpath:target-h2.properties"/>
+
+
+	<!-- In this file we configure Hibernate and transactional behavior -->
+	<import resource="applicationContext-persistence.xml" />
+</beans>

@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<java version="1.6.0_20" class="java.beans.XMLDecoder"> 
+ <object class="com.horstmann.violet.ObjectDiagramGraph"> 
+  <void method="addNode"> 
+   <object id="ObjectNode0" class="com.horstmann.violet.ObjectNode"> 
+    <void property="name"> 
+     <void property="text"> 
+      <string>JPASearchProcessor</string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>434.0</double> 
+     <double>197.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object id="ObjectNode1" class="com.horstmann.violet.ObjectNode"> 
+    <void property="name"> 
+     <void property="text"> 
+      <string>MyDAO1</string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>239.0</double> 
+     <double>122.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object id="ObjectNode2" class="com.horstmann.violet.ObjectNode"> 
+    <void property="name"> 
+     <void property="text"> 
+      <string>MyDAO2</string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>241.0</double> 
+     <double>189.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object id="ObjectNode3" class="com.horstmann.violet.ObjectNode"> 
+    <void property="name"> 
+     <void property="text"> 
+      <string>MyDAO3</string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>239.0</double> 
+     <double>258.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object id="ObjectNode4" class="com.horstmann.violet.ObjectNode"> 
+    <void property="name"> 
+     <void property="text"> 
+      <string>JPASearchFacade</string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>200.0</double> 
+     <double>328.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object id="ObjectNode5" class="com.horstmann.violet.ObjectNode"> 
+    <void property="name"> 
+     <void property="text"> 
+      <string>EntityManager</string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>61.0</double> 
+     <double>259.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object id="ObjectNode6" class="com.horstmann.violet.ObjectNode"> 
+    <void property="name"> 
+     <void property="text"> 
+      <string>MetadataUtil</string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>452.0</double> 
+     <double>295.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object id="NoteNode0" class="com.horstmann.violet.NoteNode"> 
+    <void property="text"> 
+     <void property="text"> 
+      <string>Spring injects the current
+EntityManager via the
+setEntityManager() method
+on each DAO.</string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>37.0</double> 
+     <double>151.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object id="PointNode0" class="com.horstmann.violet.PointNode"> 
+    <void id="Rectangle2D$Double0" property="bounds"> 
+     <void method="setRect"> 
+      <double>116.0</double> 
+      <double>273.0</double> 
+      <double>0.0</double> 
+      <double>0.0</double> 
+     </void> 
+    </void> 
+    <void property="bounds"> 
+     <object idref="Rectangle2D$Double0"/> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>116.0</double> 
+     <double>273.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="connect"> 
+   <object class="com.horstmann.violet.ObjectRelationshipEdge"> 
+    <void property="endArrowHead"> 
+     <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/> 
+    </void> 
+   </object> 
+   <object idref="ObjectNode0"/> 
+   <object idref="ObjectNode6"/> 
+  </void> 
+  <void method="connect"> 
+   <object class="com.horstmann.violet.ObjectRelationshipEdge"> 
+    <void property="endArrowHead"> 
+     <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/> 
+    </void> 
+   </object> 
+   <object idref="ObjectNode1"/> 
+   <object idref="ObjectNode0"/> 
+  </void> 
+  <void method="connect"> 
+   <object class="com.horstmann.violet.ObjectRelationshipEdge"> 
+    <void property="endArrowHead"> 
+     <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/> 
+    </void> 
+   </object> 
+   <object idref="ObjectNode2"/> 
+   <object idref="ObjectNode0"/> 
+  </void> 
+  <void method="connect"> 
+   <object class="com.horstmann.violet.ObjectRelationshipEdge"> 
+    <void property="endArrowHead"> 
+     <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/> 
+    </void> 
+   </object> 
+   <object idref="ObjectNode3"/> 
+   <object idref="ObjectNode0"/> 
+  </void> 
+  <void method="connect"> 
+   <object class="com.horstmann.violet.ObjectRelationshipEdge"> 
+    <void property="endArrowHead"> 
+     <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/> 
+    </void> 
+   </object> 
+   <object idref="ObjectNode4"/> 
+   <object idref="ObjectNode0"/> 
+  </void> 
+  <void method="connect"> 
+   <object class="com.horstmann.violet.ObjectRelationshipEdge"> 
+    <void property="endArrowHead"> 
+     <object class="com.horstmann.violet.ArrowHead" field="V"/> 
+    </void> 
+    <void property="lineStyle"> 
+     <object class="com.horstmann.violet.LineStyle" field="DOTTED"/> 
+    </void> 
+   </object> 
+   <object idref="ObjectNode5"/> 
+   <object idref="ObjectNode1"/> 
+  </void> 
+  <void method="connect"> 
+   <object class="com.horstmann.violet.ObjectRelationshipEdge"> 
+    <void property="endArrowHead"> 
+     <object class="com.horstmann.violet.ArrowHead" field="V"/> 
+    </void> 
+    <void property="lineStyle"> 
+     <object class="com.horstmann.violet.LineStyle" field="DOTTED"/> 
+    </void> 
+   </object> 
+   <object idref="ObjectNode5"/> 
+   <object idref="ObjectNode2"/> 
+  </void> 
+  <void method="connect"> 
+   <object class="com.horstmann.violet.ObjectRelationshipEdge"> 
+    <void property="endArrowHead"> 
+     <object class="com.horstmann.violet.ArrowHead" field="V"/> 
+    </void> 
+    <void property="lineStyle"> 
+     <object class="com.horstmann.violet.LineStyle" field="DOTTED"/> 
+    </void> 
+   </object> 
+   <object idref="ObjectNode5"/> 
+   <object idref="ObjectNode3"/> 
+  </void> 
+  <void method="connect"> 
+   <object class="com.horstmann.violet.ObjectRelationshipEdge"> 
+    <void property="endArrowHead"> 
+     <object class="com.horstmann.violet.ArrowHead" field="V"/> 
+    </void> 
+    <void property="lineStyle"> 
+     <object class="com.horstmann.violet.LineStyle" field="DOTTED"/> 
+    </void> 
+   </object> 
+   <object idref="ObjectNode5"/> 
+   <object idref="ObjectNode4"/> 
+  </void> 
+  <void method="connect"> 
+   <object class="com.horstmann.violet.NoteEdge"/> 
+   <object idref="NoteNode0"/> 
+   <object idref="PointNode0"/> 
+  </void> 
+ </object> 
+</java> 

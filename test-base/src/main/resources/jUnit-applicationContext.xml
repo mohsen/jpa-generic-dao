@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/util
+		http://www.springframework.org/schema/util/spring-util-3.2.xsd
+		"> 
+
+	<import resource="applicationContext.xml" />
+
+	<!-- TODO This may be causing a deprecation warning. See about removing it. -->
+	<!-- I'm not actually sure why this is here. I think I may have just copied it over without
+		understanding it. But it may be used for specifying the string format to use when specifying
+		date values for beans defined in spring beans XML -->
+	<bean id="customEditorConfigurer"
+		class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+		<property name="customEditors">
+			<map>
+				<entry key="java.util.Date">
+					<bean
+						class="org.springframework.beans.propertyeditors.CustomDateEditor">
+						<constructor-arg index="0">
+							<bean class="java.text.SimpleDateFormat">
+								<constructor-arg value="dd/MM/yyyy" />
+							</bean>
+						</constructor-arg>
+						<constructor-arg index="1" value="false" />
+					</bean>
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+
+	<bean id="joeA" class="test.googlecode.genericdao.model.Person">
+		<property name="id" value="1"/>
+		<property name="firstName" value="Joe" />
+		<property name="lastName" value="Alpha" />
+		<property name="father" ref="papaA" />
+		<property name="mother" ref="mamaA" />
+		<property name="isMale" value="true" />
+		<property name="age" value="10" />
+		<property name="home" ref="homeA" />
+	</bean>
+	<bean id="sallyA" class="test.googlecode.genericdao.model.Person">
+		<property name="id" value="2"/>
+		<property name="firstName" value="Sally" />
+		<property name="lastName" value="Alpha" />
+		<property name="father" ref="papaA" />
+		<property name="mother" ref="mamaA" />
+		<property name="isMale" value="false" />
+		<property name="age" value="9" />
+		<property name="home" ref="homeA" />
+	</bean>
+	<bean id="papaA" class="test.googlecode.genericdao.model.Person">
+		<property name="id" value="3"/>
+		<property name="firstName" value="Papa" />
+		<property name="lastName" value="Alpha" />
+		<property name="father" ref="grandpaA" />
+		<property name="mother" ref="grandmaA" />
+		<property name="isMale" value="true" />
+		<property name="age" value="39" />
+		<property name="home" ref="homeA" />
+	</bean>
+	<bean id="mamaA" class="test.googlecode.genericdao.model.Person">
+		<property name="id" value="4"/>
+		<property name="firstName" value="Mama" />
+		<property name="lastName" value="Alpha" />
+		<property name="isMale" value="false" />
+		<property name="age" value="40" />
+		<property name="home" ref="homeA" />
+	</bean>
+
+	<bean id="joeB" class="test.googlecode.genericdao.model.Person">
+		<property name="id" value="5"/>
+		<property name="firstName" value="Joe" />
+		<property name="lastName" value="Beta" />
+		<property name="father" ref="papaB" />
+		<property name="mother" ref="mamaB" />
+		<property name="isMale" value="true" />
+		<property name="age" value="10" />
+		<property name="home" ref="homeB" />
+	</bean>
+	<bean id="margaretB" class="test.googlecode.genericdao.model.Person">
+		<property name="id" value="6"/>
+		<property name="firstName" value="Margaret" />
+		<property name="lastName" value="Beta" />
+		<property name="father" ref="papaB" />
+		<property name="mother" ref="mamaB" />
+		<property name="isMale" value="false" />
+		<property name="age" value="14" />
+		<property name="home" ref="homeB" />
+	</bean>
+	<bean id="papaB" class="test.googlecode.genericdao.model.Person">
+		<property name="id" value="7"/>
+		<property name="firstName" value="Papa" />
+		<property name="lastName" value="Beta" />
+		<property name="isMale" value="true" />
+		<property name="age" value="39" />
+		<property name="home" ref="homeB" />
+	</bean>
+	<bean id="mamaB" class="test.googlecode.genericdao.model.Person">
+		<property name="id" value="8"/>
+		<property name="firstName" value="Mama" />
+		<property name="lastName" value="Beta" />
+		<property name="father" ref="grandpaA" />
+		<property name="mother" ref="grandmaA" />
+		<property name="isMale" value="false" />
+		<property name="age" value="38" />
+		<property name="home" ref="homeB" />
+	</bean>
+
+	<bean id="grandpaA" class="test.googlecode.genericdao.model.Person">
+		<property name="id" value="9"/>
+		<property name="firstName" value="Grandpa" />
+		<property name="lastName" value="Alpha" />
+		<property name="isMale" value="true" />
+		<property name="age" value="65" />
+		<property name="home" ref="homeC" />
+	</bean>
+	<bean id="grandmaA" class="test.googlecode.genericdao.model.Person">
+		<property name="id" value="10"/>
+		<property name="firstName" value="Grandma" />
+		<property name="lastName" value="Alpha" />
+		<property name="isMale" value="false" />
+		<property name="age" value="65" />
+		<property name="home" ref="homeC" />
+	</bean>
+	
+	<bean id="homeA" class="test.googlecode.genericdao.model.Home">
+		<property name="id" value="1"/>
+		<property name="type" value="house"/>
+		<property name="address">
+			<bean id="addressA" class="test.googlecode.genericdao.model.Address">
+				<property name="id" value="1"/>
+				<property name="street" value="940 N Fairfield"/>
+				<property name="city" value="Chicago"/>
+				<property name="state" value="IL"/>
+				<property name="zip" value="60610"/>
+			</bean>
+		</property>
+	</bean>
+	<bean id="homeB" class="test.googlecode.genericdao.model.Home">
+		<property name="id" value="2"/>
+		<property name="type" value="apartment"/>
+		<property name="address">
+			<bean id="addressB" class="test.googlecode.genericdao.model.Address">
+				<property name="id" value="2"/>
+				<property name="street" value="734 N Fairfield, Apt 3"/>
+				<property name="city" value="Chicago"/>
+				<property name="state" value="IL"/>
+				<property name="zip" value="60610"/>
+			</bean>
+		</property>
+	</bean>
+	<bean id="homeC" class="test.googlecode.genericdao.model.Home">
+		<property name="id" value="3"/>
+		<property name="type" value="house"/>
+		<property name="address">
+			<bean id="addressC" class="test.googlecode.genericdao.model.Address">
+				<property name="id" value="3"/>
+				<property name="street" value="3290 W Fulton"/>
+				<property name="city" value="Chicago"/>
+				<property name="state" value="IL"/>
+				<property name="zip" value="60610"/>
+			</bean>
+		</property>
+	</bean>
+	
+	
+	<bean id="fishWiggles" class="test.googlecode.genericdao.model.Pet">
+		<property name="id" value="1"/>
+		<property name="ident">
+			<bean class="test.googlecode.genericdao.model.Ident">
+				<property name="idNumber" value="1111"/>
+				<property name="name">
+					<bean class="test.googlecode.genericdao.model.Name">
+						<property name="first" value="Mr"/>
+						<property name="last" value="Wiggles"/>
+					</bean>
+				</property>
+			</bean>
+		</property>
+		<property name="species" value="fish"/>
+		<property name="favoritePlaymate" ref="spiderJimmy"/>
+	</bean>
+	<bean id="catPrissy" class="test.googlecode.genericdao.model.LimbedPet">
+		<property name="id" value="2"/>
+		<property name="ident">
+			<bean class="test.googlecode.genericdao.model.Ident">
+				<property name="idNumber" value="2222"/>
+				<property name="name">
+					<bean class="test.googlecode.genericdao.model.Name">
+						<property name="first" value="Miss"/>
+						<property name="last" value="Prissy"/>
+					</bean>
+				</property>
+			</bean>
+		</property>
+		<property name="species" value="cat"/>
+		<property name="limbs">
+			<list>
+				<value>left front leg</value>
+				<value>right front leg</value>
+				<value>left hind leg</value>
+				<value>right hind leg</value>
+			</list>
+		</property>
+		<property name="favoritePlaymate" ref="fishWiggles"/>
+	</bean>
+	<bean id="catNorman" class="test.googlecode.genericdao.model.LimbedPet">
+		<property name="id" value="3"/>
+		<property name="ident">
+			<bean class="test.googlecode.genericdao.model.Ident">
+				<property name="idNumber" value="3333"/>
+				<property name="name">
+					<bean class="test.googlecode.genericdao.model.Name">
+						<property name="first" value="Norman"/>
+					</bean>
+				</property>
+			</bean>
+		</property>
+		<property name="species" value="cat"/>
+		<property name="limbs">
+			<list>
+				<value>left front leg</value>
+				<value>right front leg</value>
+				<value>left hind leg</value>
+				<value>right hind leg</value>
+			</list>
+		</property>
+		<property name="favoritePlaymate" ref="spiderJimmy"/>
+	</bean>
+	<bean id="spiderJimmy" class="test.googlecode.genericdao.model.LimbedPet">
+		<property name="id" value="4"/>
+		<property name="ident">
+			<bean class="test.googlecode.genericdao.model.Ident">
+				<property name="idNumber" value="4444"/>
+				<property name="name">
+					<bean class="test.googlecode.genericdao.model.Name">
+						<property name="first" value="Jimmy"/>
+					</bean>
+				</property>
+			</bean>
+		</property>
+		<property name="species" value="spider"/>
+		<property name="limbs">
+			<list>
+				<value>left front leg</value>
+				<value>right front leg</value>
+				<value>left frontish leg</value>
+				<value>right frontish leg</value>
+				<value>left hindish leg</value>
+				<value>right hindish leg</value>
+				<value>left hind leg</value>
+				<value>right hind leg</value>
+			</list>
+		</property>
+		<property name="favoritePlaymate" ref="spiderJimmy"/>
+	</bean>
+	
+	<bean id="i1" class="test.googlecode.genericdao.model.Ingredient" p:ingredientId="1" p:name="Sugar"/>
+	<bean id="i2" class="test.googlecode.genericdao.model.Ingredient" p:ingredientId="2" p:name="Butter"/>
+	<bean id="i3" class="test.googlecode.genericdao.model.Ingredient" p:ingredientId="3" p:name="Flour"/>
+	<bean id="i4" class="test.googlecode.genericdao.model.Ingredient" p:ingredientId="4" p:name="Salt"/>
+	<bean id="i5" class="test.googlecode.genericdao.model.Ingredient" p:ingredientId="5" p:name="Yeast"/>
+	<bean id="i6" class="test.googlecode.genericdao.model.Ingredient" p:ingredientId="6" p:name="Chicken"/>
+
+	<bean id="s1" class="test.googlecode.genericdao.model.Store" p:id="1" p:name="Billy's Mini-Mart">
+		<property name="ingredientsCarried">
+			<set>
+				<ref bean="i1"/>
+				<ref bean="i2"/>
+				<ref bean="i3"/>
+				<ref bean="i4"/>
+				<ref bean="i5"/>
+				<ref bean="i6"/>
+			</set>
+		</property>
+	</bean>
+	<bean id="s2" class="test.googlecode.genericdao.model.Store" p:id="2" p:name="Tom's Convenience Store">
+		<property name="ingredientsCarried">
+			<set>
+				<ref bean="i1"/>
+				<ref bean="i2"/>
+				<ref bean="i4"/>
+			</set>
+		</property>
+	</bean>
+	
+	<bean id="r1" class="test.googlecode.genericdao.model.Recipe" p:id="1" p:title="Bread">
+		<property name="ingredients">
+			<set>
+				<bean class="test.googlecode.genericdao.model.RecipeIngredient" p:amount="4" p:measure="cups">
+					<property name="compoundId">
+						<bean class="test.googlecode.genericdao.model.RecipeIngredientId" p:recipe-ref="r1" p:ingredient-ref="i3" />
+					</property>
+				</bean>
+				<bean class="test.googlecode.genericdao.model.RecipeIngredient" p:amount=".5" p:measure="tsp.">
+					<property name="compoundId">
+						<bean class="test.googlecode.genericdao.model.RecipeIngredientId" p:recipe-ref="r1" p:ingredient-ref="i4" />
+					</property>
+				</bean>
+				<bean class="test.googlecode.genericdao.model.RecipeIngredient" p:amount="1" p:measure="Tbs.">
+					<property name="compoundId">
+						<bean class="test.googlecode.genericdao.model.RecipeIngredientId" p:recipe-ref="r1" p:ingredient-ref="i5" />
+					</property>
+				</bean>
+			</set>
+		</property>
+	</bean>
+	
+	<bean id="r2" class="test.googlecode.genericdao.model.Recipe" p:id="2" p:title="Fried Chicken">
+		<property name="ingredients">
+			<set>
+				<bean class="test.googlecode.genericdao.model.RecipeIngredient" p:amount="6" p:measure="pieces">
+					<property name="compoundId">
+						<bean class="test.googlecode.genericdao.model.RecipeIngredientId" p:recipe-ref="r2" p:ingredient-ref="i6" />
+					</property>
+				</bean>
+				<bean class="test.googlecode.genericdao.model.RecipeIngredient" p:amount="1" p:measure="cup">
+					<property name="compoundId">
+						<bean class="test.googlecode.genericdao.model.RecipeIngredientId" p:recipe-ref="r2" p:ingredient-ref="i3" />
+					</property>
+				</bean>
+				<bean class="test.googlecode.genericdao.model.RecipeIngredient" p:amount=".25" p:measure="cup">
+					<property name="compoundId">
+						<bean class="test.googlecode.genericdao.model.RecipeIngredientId" p:recipe-ref="r2" p:ingredient-ref="i2" />
+					</property>
+				</bean>
+				<bean class="test.googlecode.genericdao.model.RecipeIngredient" p:amount=".5" p:measure="tsp.">
+					<property name="compoundId">
+						<bean class="test.googlecode.genericdao.model.RecipeIngredientId" p:recipe-ref="r2" p:ingredient-ref="i4" />
+					</property>
+				</bean>
+			</set>
+		</property>
+	</bean>
+	
+	<bean id="r3" class="test.googlecode.genericdao.model.Recipe" p:id="3" p:title="Toffee">
+		<property name="ingredients">
+			<set>
+				<bean class="test.googlecode.genericdao.model.RecipeIngredient" p:amount="2" p:measure="cups">
+					<property name="compoundId">
+						<bean class="test.googlecode.genericdao.model.RecipeIngredientId" p:recipe-ref="r3" p:ingredient-ref="i1" />
+					</property>
+				</bean>
+				<bean class="test.googlecode.genericdao.model.RecipeIngredient" p:amount="2" p:measure="cups">
+					<property name="compoundId">
+						<bean class="test.googlecode.genericdao.model.RecipeIngredientId" p:recipe-ref="r3" p:ingredient-ref="i2" />
+					</property>
+				</bean>
+			</set>
+		</property>
+	</bean>
+	
+	<util:list id="stores">
+		<ref bean="s1"/>
+		<ref bean="s2"/>
+	</util:list>
+	
+	<util:list id="recipes">
+		<ref bean="r1"/>
+		<ref bean="r2"/>
+		<ref bean="r3"/>
+	</util:list>
+	
+	<util:list id="projects">
+		<bean id="project1" class="test.googlecode.genericdao.model.Project" p:id="1" p:name="First" p:inceptionYear="1900">
+			<property name="members">
+				<set>
+					<ref bean="joeA"/>
+					<ref bean="joeB"/>
+				</set>
+			</property>
+		</bean>
+		<bean id="project2" class="test.googlecode.genericdao.model.Project" p:id="2" p:name="Second" p:inceptionYear="1950">
+			<property name="members">
+				<set>
+					<ref bean="joeA"/>
+					<ref bean="sallyA"/>
+				</set>
+			</property>
+		</bean>
+		<bean id="project3" class="test.googlecode.genericdao.model.Project" p:id="3" p:name="Third" p:inceptionYear="2000">
+			<property name="members">
+				<set>
+					<ref bean="papaA"/>
+					<ref bean="mamaA"/>
+					<ref bean="papaB"/>
+					<ref bean="mamaB"/>
+				</set>
+			</property>
+		</bean>
+	</util:list>
+
+</beans>
+

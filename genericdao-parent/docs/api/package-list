@@ -1,0 +1,9 @@
+com.googlecode.genericdao.dao
+com.googlecode.genericdao.dao.hibernate
+com.googlecode.genericdao.dao.hibernate.original
+com.googlecode.genericdao.dao.jpa
+com.googlecode.genericdao.search
+com.googlecode.genericdao.search.flex
+com.googlecode.genericdao.search.hibernate
+com.googlecode.genericdao.search.jpa
+com.googlecode.genericdao.search.jpa.hibernate

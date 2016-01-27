@@ -1,0 +1,47 @@
+Invoking Maven for the goals: [org.apache.maven.plugins:maven-javadoc-plugin:2.7:javadoc] with no properties
+
+M2_HOME=D:\devel\java\tools\apache\maven\apache-maven-3.0.1\bin\..
+MAVEN_OPTS=-Xmx512m
+JAVA_HOME=D:\devel\java\sdk\jdk1.7.0_13_64bit\jre\..
+JAVA_OPTS=null
+
+
+D:\svn\hibernate-generic-dao-read-only\search-jpa-hibernate>set JAVA_HOME=D:\devel\java\sdk\jdk1.7.0_13_64bit 
+
+D:\svn\hibernate-generic-dao-read-only\search-jpa-hibernate>set MAVEN_OPTS=-Xmx512m 
+[INFO] Scanning for projects...
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for com.googlecode.genericdao:search-jpa-hibernate:jar:1.3.0-SNAPSHOT
+[WARNING] 'parent.relativePath' of POM com.googlecode.genericdao:genericdao-parent:1.3.0-SNAPSHOT (D:\svn\hibernate-generic-dao-read-only\pom.xml) points at org.primefaces:primefaces instead of org.sonatype.oss:oss-parent, please verify your project structure @ com.googlecode.genericdao:genericdao-parent:1.3.0-SNAPSHOT, D:\svn\hibernate-generic-dao-read-only\pom.xml, line 20, column 10
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-compiler-plugin is missing. @ com.googlecode.genericdao:genericdao-parent:1.3.0-SNAPSHOT, D:\svn\hibernate-generic-dao-read-only\pom.xml, line 64, column 12
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-surefire-plugin is missing. @ com.googlecode.genericdao:genericdao-parent:1.3.0-SNAPSHOT, D:\svn\hibernate-generic-dao-read-only\pom.xml, line 71, column 12
+[WARNING] 
+[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+[WARNING] 
+[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+[WARNING] 
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Hibernate Generic DAO - Search JPA Hibernate 1.3.0-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] >>> maven-javadoc-plugin:2.7:javadoc (default-cli) @ search-jpa-hibernate >>>
+Downloading: https://oss.sonatype.org/content/repositories/snapshots/com/googlecode/genericdao/search-hibernate/1.3.0-SNAPSHOT/maven-metadata.xml
+Downloading: https://oss.sonatype.org/content/repositories/snapshots/com/googlecode/genericdao/search-hibernate/1.3.0-SNAPSHOT/search-hibernate-1.3.0-SNAPSHOT.pom
+[WARNING] The POM for com.googlecode.genericdao:search-hibernate:jar:1.3.0-SNAPSHOT is missing, no dependency information available
+[WARNING] The POM for com.googlecode.genericdao:test-search:jar:1.3.0-SNAPSHOT is missing, no dependency information available
+Downloading: https://oss.sonatype.org/content/repositories/snapshots/com/googlecode/genericdao/search-hibernate/1.3.0-SNAPSHOT/search-hibernate-1.3.0-SNAPSHOT.jar
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 16.718s
+[INFO] Finished at: Thu Mar 06 22:14:56 IRST 2014
+[INFO] Final Memory: 9M/114M
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal on project search-jpa-hibernate: Could not resolve dependencies for project com.googlecode.genericdao:search-jpa-hibernate:jar:1.3.0-SNAPSHOT: The following artifacts could not be resolved: com.googlecode.genericdao:search-hibernate:jar:1.3.0-SNAPSHOT, com.googlecode.genericdao:test-search:jar:1.3.0-SNAPSHOT: Could not find artifact com.googlecode.genericdao:search-hibernate:jar:1.3.0-SNAPSHOT in sonatype-nexus-snapshots (https://oss.sonatype.org/content/repositories/snapshots) -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/DependencyResolutionException

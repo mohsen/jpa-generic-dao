@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<context:annotation-config />
+	<context:property-placeholder location="classpath:target-h2.properties"/>
+
+	<!-- In this file we configure Hibernate Entity Manager and transactional behavior -->
+	<import resource="applicationContext-persistence.xml" />
+
+	<!--**** Hibernate Generic DAO Setup ****-->
+	<!--
+		Need one search processor and one metadata util per persistence unit
+		(i.e. EntityManagerFactory). We're wiring these to the Generic DAOs
+		using an autowire annotation in BaseDAO.
+	-->
+	<bean id="searchProcessor" class="com.googlecode.genericdao.search.jpa.JPASearchProcessor">
+		<constructor-arg ref="metadataUtil" />
+	</bean>
+
+	<bean id="metadataUtil" class="com.googlecode.genericdao.search.jpa.hibernate.HibernateMetadataUtil"
+		factory-method="getInstanceForEntityManagerFactory">
+		<constructor-arg ref="entityManagerFactory" />
+	</bean>
+
+
+
+	<!--**** Application components ****-->
+	<bean id="citizenService" class="sample.googlecode.genericdao.service.CitizenServiceImpl" />
+	<bean id="townService" class="sample.googlecode.genericdao.service.TownServiceImpl" />
+
+	<bean id="citizenDAO" class="sample.googlecode.genericdao.dao.CitizenDAOImpl" />
+	<bean id="townDAO" class="sample.googlecode.genericdao.dao.TownDAOImpl" />
+	
+	<!--
+		Here we define a singleton GeneralDAO. This is optional. Again,
+		searchProcessor and PersistenceContext are filled in using
+		annotations.
+	-->
+	<bean id="generalDAO" class="sample.googlecode.genericdao.dao.DecoratedGeneralDAOImpl" />
+</beans>

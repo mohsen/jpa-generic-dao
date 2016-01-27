@@ -1,0 +1,16 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence">
+    <persistence-unit name="JPATest" transaction-type="RESOURCE_LOCAL">
+		<class>test.googlecode.genericdao.model.Address</class>
+		<class>test.googlecode.genericdao.model.Home</class>
+		<class>test.googlecode.genericdao.model.Person</class>
+		<class>test.googlecode.genericdao.model.Pet</class>
+		<class>test.googlecode.genericdao.model.LimbedPet</class>
+		<class>test.googlecode.genericdao.model.Recipe</class>
+		<class>test.googlecode.genericdao.model.Ingredient</class>
+		<class>test.googlecode.genericdao.model.RecipeIngredient</class>
+		<class>test.googlecode.genericdao.model.Store</class>
+		<class>test.googlecode.genericdao.model.Project</class>
+    </persistence-unit>
+</persistence>
