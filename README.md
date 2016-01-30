@@ -2,10 +2,10 @@
 
 JPA/Hibernate Generic DAO
 
-JPA Genric DAO is a clone of Hibernate Generic DAO project originally written by David Wolverton:
-<https://code.google.com/p/hibernate-generic-dao/>
+JPA Genric DAO is a fork of [Hibernate Generic DAO](https://code.google.com/p/hibernate-generic-dao/) 
+project originally written by [David Wolverton](http://stackoverflow.com/users/2120576/david-wolverton).
 
-This project is apparently abandoned, since Google code is down and there is no activity in more than two years.
+This project is apparently abandoned, since Google code is down and there is no activity in recent two years.
 
 I use Generic DAO in most of my projects, so decided to share bug fixes to it here. There is still **no** such simple-and-beauty library,
 neither [JPA Criteria API](https://docs.oracle.com/javaee/6/tutorial/doc/gjitv.html),
