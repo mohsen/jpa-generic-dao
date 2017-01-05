@@ -46,4 +46,12 @@ public interface IMutableSearch extends ISearch {
     public IMutableSearch setResultMode(int resultMode);
 
     public IMutableSearch setResultMapClass(Class<?> clazz);
+
+    /**
+     * @param joins
+     * @return
+     * @since 1.3.0
+     */
+    public IMutableSearch setJoins(List<String> joins);
+
 }

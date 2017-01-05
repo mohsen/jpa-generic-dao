@@ -48,6 +48,11 @@ public class GenericDAOImpl<T, ID extends Serializable> extends
         return _find(persistentClass, id);
     }
 
+    /**
+     * Return all the persistent instances of the given entity class with the given identifiers. An array of entities is returned that
+     * matches the same order of the ids listed in the call. For each entity that is not found in the datastore, a null will be inserted in
+     * its place in the return array.
+     */
     public T[] find(ID... ids) {
         return _find(persistentClass, ids);
     }

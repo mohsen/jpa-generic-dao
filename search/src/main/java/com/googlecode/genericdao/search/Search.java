@@ -48,7 +48,7 @@ public class Search implements IMutableSearch, Serializable {
 
     protected List<String> fetches = new ArrayList<String>();
 
-    protected List<String> customFroms = new ArrayList<String>();
+    protected List<String> joins = new ArrayList<String>();
 
     protected int resultMode = RESULT_AUTO;
 
@@ -609,7 +609,7 @@ public class Search implements IMutableSearch, Serializable {
     }
 
     public List<String> getJoins() {
-        return customFroms;
+        return joins;
     }
 
     /**
@@ -617,8 +617,8 @@ public class Search implements IMutableSearch, Serializable {
      * @param customFroms
      * @return
      */
-    public Search setCustomFroms(List<String> customFroms) {
-        this.customFroms = customFroms;
+    public Search setJoins(List<String> joins) {
+        this.joins = joins;
         return this;
     }
 

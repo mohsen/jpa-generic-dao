@@ -783,6 +783,10 @@ public class SearchUtil {
         sorts.addAll(source.getSorts());
         destination.setSorts(sorts);
 
+        ArrayList<String> joins = new ArrayList<String>();
+        joins.addAll(source.getJoins());
+        destination.setJoins(joins);
+
         return destination;
     }
 
@@ -1036,14 +1040,14 @@ public class SearchUtil {
      * @param search
      * @param join
      */
-    public static void addJoin(Search search, String join) {
+    public static void addJoin(IMutableSearch search, String join) {
         if (join == null || "".equals(join))
             return; // null join do nothing, don't bother to add them.
 
         List<String> joins = search.getJoins();
         if (joins == null) {
             joins = new ArrayList<String>();
-            search.setCustomFroms(joins);
+            search.setJoins(joins);
         }
         joins.add(join);
     }
