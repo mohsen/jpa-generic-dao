@@ -21,7 +21,7 @@ import com.googlecode.genericdao.search.Sort;
 import test.googlecode.genericdao.model.Person;
 import test.googlecode.genericdao.search.BaseSearchTest;
 
-import javax.persistence.NonUniqueResultException;
+import jakarta.persistence.NonUniqueResultException;
 
 import org.junit.Test;
 

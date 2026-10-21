@@ -14,7 +14,7 @@
  */
 package test.googlecode.genericdao.model;
 
-import javax.persistence.Embeddable;
+import jakarta.persistence.Embeddable;
 
 /**
  * Name component used for Pets (note, this is not used for Persons)

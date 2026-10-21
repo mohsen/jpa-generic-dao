@@ -16,7 +16,7 @@ package test.googlecode.genericdao.dao.hibernate.dao;
 
 import java.util.List;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import test.googlecode.genericdao.model.Person;
 

@@ -68,7 +68,7 @@ public interface GenericDAO<T, ID extends Serializable> {
      *         not denote an entity type or the second argument is
      *         not a valid type for that entitys primary key or
      *         is null
-     * @throws javax.persistence.EntityNotFoundException if the entity state
+     * @throws jakarta.persistence.EntityNotFoundException if the entity state
      *         cannot be accessed
 	 */
 	public T getReference(ID id);
@@ -88,7 +88,7 @@ public interface GenericDAO<T, ID extends Serializable> {
      *         not denote an entity type or the second argument is
      *         not a valid type for that entitys primary key or
      *         is null
-     * @throws javax.persistence.EntityNotFoundException if the entity state
+     * @throws jakarta.persistence.EntityNotFoundException if the entity state
      *         cannot be accessed
 	 */
 	public T[] getReferences(ID... ids);

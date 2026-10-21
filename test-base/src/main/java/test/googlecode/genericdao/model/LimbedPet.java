@@ -16,10 +16,10 @@ package test.googlecode.genericdao.model;
 
 import java.util.List;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.OrderColumn;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OrderColumn;
 
 @Entity
 @DiscriminatorValue("1")

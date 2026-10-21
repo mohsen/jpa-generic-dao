@@ -17,7 +17,7 @@ package test.googlecode.genericdao.dao.hibernate;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import org.hibernate.NonUniqueResultException;
 import org.hibernate.SessionFactory;

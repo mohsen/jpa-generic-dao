@@ -475,7 +475,7 @@ public class FilterTest extends BaseSearchTest {
 		// Test sub-query
 		s.clearFilters();
 		s.addFilterCustom("{home} = ?1", grandmaA.getHome());
-		s.addFilterCustom("{} in (select dude from Person dude where dude.isMale = 1)");
+		s.addFilterCustom("{} in (select dude from Person dude where dude.isMale = true)");
 		assertEquals(grandpaA.getId(), target.searchUnique(s));
 		
 		// Test combination with fields

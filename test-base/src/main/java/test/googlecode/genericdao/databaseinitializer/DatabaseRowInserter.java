@@ -126,7 +126,6 @@ public class DatabaseRowInserter {
 
 	public void insert(Project p) throws SQLException {
 		startInsertForTable("project");
-		setField("id", p.getId());
 		setField("inceptionYear", p.getInceptionYear());
 		setField("name", p.getName());
 		execute(true);

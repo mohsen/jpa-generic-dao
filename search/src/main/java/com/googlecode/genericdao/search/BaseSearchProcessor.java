@@ -569,13 +569,7 @@ public abstract class BaseSearchProcessor {
             if (!(value instanceof Filter)) {
                 return null;
             } else if (value instanceof Filter) {
-                // NOTE: Using "all" for the simple all or some is logically
-                // incorrect. It should be "some". However,
-                // because of a bug in how Hibernate 3.1.1 tries to simplify
-                // "not ... some/all ...) it actually ends
-                // up working as desired. TODO: If and when the Hibernate bug is
-                // fixed, this should be switched to "some".
-                String simple = generateSimpleAllOrSome(ctx, property, (Filter) value, "all");
+                String simple = generateSimpleAllOrSome(ctx, property, (Filter) value, "some");
                 if (simple != null) {
                     return "not ( " + simple + " )";
                 } else {
@@ -850,6 +844,14 @@ public abstract class BaseSearchProcessor {
     protected String getPathRef(SearchContext ctx, String path) {
         if (path == null || "".equals(path)) {
             return ctx.getRootAlias();
+        }
+
+        // the "collection.size" path syntax is no longer supported (Hibernate 6); use the size() function.
+        if (path.endsWith(".size")) {
+            String collectionPath = path.substring(0, path.length() - ".size".length());
+            if (metadataUtil.get(ctx.rootClass, collectionPath).isCollection()) {
+                return "size(" + getPathRef(ctx, collectionPath) + ")";
+            }
         }
 
         String[] parts = splitPath(ctx, path);

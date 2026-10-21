@@ -14,7 +14,7 @@
  */
 package test.googlecode.genericdao.dao.hibernate.dao;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;

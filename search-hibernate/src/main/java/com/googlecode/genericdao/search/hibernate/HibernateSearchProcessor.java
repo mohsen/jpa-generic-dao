@@ -16,11 +16,10 @@ package com.googlecode.genericdao.search.hibernate;
 
 import com.googlecode.genericdao.search.*;
 import org.hibernate.NonUniqueResultException;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.transform.ResultTransformer;
-import org.hibernate.transform.Transformers;
+import org.hibernate.query.Query;
+import org.hibernate.query.TupleTransformer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -255,10 +254,10 @@ public class HibernateSearchProcessor extends BaseSearchProcessor {
 
 		switch (resultMode) {
 		case ISearch.RESULT_ARRAY:
-			query.setResultTransformer(ARRAY_RESULT_TRANSFORMER);
+			query.setTupleTransformer(ARRAY_RESULT_TRANSFORMER);
 			break;
 		case ISearch.RESULT_LIST:
-			query.setResultTransformer(Transformers.TO_LIST);
+			query.setTupleTransformer(LIST_RESULT_TRANSFORMER);
 			break;
 		case ISearch.RESULT_MAP:
 			List<String> keyList = new ArrayList<String>();
@@ -271,41 +270,33 @@ public class HibernateSearchProcessor extends BaseSearchProcessor {
 					keyList.add(field.getProperty());
 				}
 			}
-			query.setResultTransformer(new MapResultTransformer(keyList.toArray(new String[0])));
+			query.setTupleTransformer(new MapResultTransformer(keyList.toArray(new String[0])));
 			break;
 		default: // ISearch.RESULT_SINGLE
 			break;
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	private static final ResultTransformer ARRAY_RESULT_TRANSFORMER = new ResultTransformer() {
-		private static final long serialVersionUID = 1L;
-
-		public List transformList(List collection) {
-			return collection;
-		}
-
-		public Object transformTuple(Object[] tuple, String[] aliases) {
+	private static final TupleTransformer<Object[]> ARRAY_RESULT_TRANSFORMER = new TupleTransformer<Object[]>() {
+		public Object[] transformTuple(Object[] tuple, String[] aliases) {
 			return tuple;
 		}
 	};
 
-	@SuppressWarnings("unchecked")
-	private static class MapResultTransformer implements ResultTransformer {
-		private static final long serialVersionUID = 1L;
+	private static final TupleTransformer<List<Object>> LIST_RESULT_TRANSFORMER = new TupleTransformer<List<Object>>() {
+		public List<Object> transformTuple(Object[] tuple, String[] aliases) {
+			return new ArrayList<Object>(Arrays.asList(tuple));
+		}
+	};
 
+	private static class MapResultTransformer implements TupleTransformer<Map<String, Object>> {
 		private String[] keys;
 
 		public MapResultTransformer(String[] keys) {
 			this.keys = keys;
 		}
 
-		public List transformList(List collection) {
-			return collection;
-		}
-
-		public Object transformTuple(Object[] tuple, String[] aliases) {
+		public Map<String, Object> transformTuple(Object[] tuple, String[] aliases) {
 			Map<String, Object> map = new HashMap<String, Object>();
 			for (int i = 0; i < keys.length; i++) {
 				String key = keys[i];

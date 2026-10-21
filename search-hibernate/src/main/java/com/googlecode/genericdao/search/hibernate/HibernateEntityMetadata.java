@@ -1,11 +1,11 @@
 /* Copyright 2013 David Wolverton
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,83 +15,74 @@
 package com.googlecode.genericdao.search.hibernate;
 
 import java.io.Serializable;
+import java.util.List;
+
+import jakarta.persistence.metamodel.Attribute;
+import jakarta.persistence.metamodel.EntityType;
+import jakarta.persistence.metamodel.SingularAttribute;
 
 import org.hibernate.SessionFactory;
-import org.hibernate.engine.spi.SessionFactoryImplementor;
-import org.hibernate.metadata.ClassMetadata;
-import org.hibernate.type.CollectionType;
-import org.hibernate.type.EntityType;
-import org.hibernate.type.Type;
 
 import com.googlecode.genericdao.search.Metadata;
 
 /**
  * Implementation of Metadata for a Hibernate entity.
- * 
+ *
  * @author dwolverton
  */
 public class HibernateEntityMetadata implements Metadata {
 
 	private SessionFactory sessionFactory;
-	private ClassMetadata metadata;
+	private EntityType<?> entityType;
 	private Class<?> collectionType;
-	
-	public HibernateEntityMetadata(SessionFactory sessionFactory, ClassMetadata classMetadata, Class<?> collectionType) {
+
+	public HibernateEntityMetadata(SessionFactory sessionFactory, EntityType<?> entityType, Class<?> collectionType) {
 		this.sessionFactory = sessionFactory;
-		this.metadata = classMetadata;
+		this.entityType = entityType;
 		this.collectionType = collectionType;
 	}
-	
+
 	public String getEntityName() {
-		return metadata.getEntityName();
+		// Hibernate's entity name for a mapped class is its fully qualified class name
+		return entityType.getJavaType().getName();
 	}
-	
+
 	public String getIdProperty() {
-		return metadata.getIdentifierPropertyName();
+		SingularAttribute<?, ?> idAttribute = getIdAttribute();
+		return idAttribute == null ? null : idAttribute.getName();
 	}
 
 	public Metadata getIdType() {
-		return new HibernateNonEntityMetadata(sessionFactory, metadata.getIdentifierType(), null);
+		return new HibernateNonEntityMetadata(sessionFactory, entityType.getIdType(), null);
 	}
 
 	public Serializable getIdValue(Object object) {
-		return metadata.getIdentifier(object, null);
+		return (Serializable) sessionFactory.getPersistenceUnitUtil().getIdentifier(object);
 	}
 
 	public Class<?> getJavaClass() {
-		return metadata.getMappedClass();
+		return entityType.getJavaType();
 	}
 
 	public String[] getProperties() {
-		String[] pn = metadata.getPropertyNames();
-		String[] result = new String[pn.length + 1];
-		result[0] = metadata.getIdentifierPropertyName();
-		for (int i = 0; i < pn.length; i++) {
-			result[i+1] = pn[i];
+		List<String> pn = HibernateMetadataUtil.getAttributeNames(entityType, true);
+		String[] result = new String[pn.size() + 1];
+		result[0] = getIdProperty();
+		for (int i = 0; i < pn.size(); i++) {
+			result[i+1] = pn.get(i);
 		}
 		return result;
 	}
 
 	public Metadata getPropertyType(String property) {
-		Type pType = metadata.getPropertyType(property);
-		Class<?> pCollectionType = null;
-		if (pType.isCollectionType()) {
-			pType = ((CollectionType)pType).getElementType((SessionFactoryImplementor) sessionFactory);
-			pCollectionType = pType.getReturnedClass();
-		}
-		
-		if (pType.isEntityType()) {
-			return new HibernateEntityMetadata(sessionFactory, sessionFactory.getClassMetadata(((EntityType)pType).getName()), pCollectionType);
-		} else {
-			return new HibernateNonEntityMetadata(sessionFactory, pType, pCollectionType);
-		}
+		return HibernateMetadataUtil.forAttribute(sessionFactory, getAttribute(property));
 	}
 
 	public Object getPropertyValue(Object object, String property) {
-		if (getIdProperty().equals(property))
+		if (property.equals(getIdProperty()))
 			return getIdValue(object);
 		else
-			return metadata.getPropertyValue(object, property);
+			return HibernateMetadataUtil.getAttributeValue(getAttribute(property), object);
 	}
 
 	public boolean isCollection() {
@@ -118,4 +109,24 @@ public class HibernateEntityMetadata implements Metadata {
 		return false;
 	}
 
+	private SingularAttribute<?, ?> getIdAttribute() {
+		if (!entityType.hasSingleIdAttribute())
+			return null;
+		for (SingularAttribute<?, ?> attribute : entityType.getSingularAttributes()) {
+			if (attribute.isId())
+				return attribute;
+		}
+		return null;
+	}
+
+	private Attribute<?, ?> getAttribute(String property) {
+		try {
+			return entityType.getAttribute(property);
+		} catch (IllegalArgumentException ex) {
+			// as in HQL, "id" refers to the identifier property whatever its name
+			if ("id".equals(property) && getIdAttribute() != null)
+				return getIdAttribute();
+			throw ex;
+		}
+	}
 }

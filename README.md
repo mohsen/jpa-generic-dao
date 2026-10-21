@@ -34,6 +34,41 @@ Again, if you don’t like our way of doing things, maybe you can at least get s
 
 **Remote Search** (for R.I.A.s?): As mentioned above, the framework can provide a single point for client-server CRUD and search operations. The framework’s search is meant to be able to cross the client-server boundary. So lists and searches in the client application can take advantage of the same easy-to-use features and consistency that the search functionality provides in the server tier or single tier application. This consistency allowed us to create a reusable collection type in Adobe Flex 3 that is associated with a single search object and automatically updates itself from the server according to the search parameters.
 
+# Requirements
+
+Version 2.x targets Jakarta EE:
+
+* Java 17+
+* Jakarta Persistence 3.2 (`jakarta.persistence.*`, Jakarta EE 11)
+* Hibernate ORM 7.x (for the `search-hibernate`, `search-jpa-hibernate` and `dao-hibernate` modules; tested with 7.4)
+* Spring Framework 7 if you use the Spring integration (Hibernate support is in `org.springframework.orm.jpa.hibernate`)
+
+Version 1.x is the last line for `javax.persistence`, Hibernate 4 and Spring 3.
+
+## Upgrading from 1.x
+
+* Replace `javax.persistence` imports with `jakarta.persistence` in your entities.
+* `com.googlecode.genericdao.search.jpa.hibernate.HibernateMetadataUtil.getInstanceForEntityManagerFactory`
+  now takes any `jakarta.persistence.EntityManagerFactory` (Hibernate 6 removed `HibernateEntityManagerFactory`).
+* `HibernateEntityMetadata` and `HibernateNonEntityMetadata` are now built from the Jakarta Persistence metamodel
+  (`EntityType` / `Type`) instead of Hibernate's removed `ClassMetadata` / `Type` classes.
+* Custom filter expressions (`Filter.custom`, `addFilterCustom`) are passed to Hibernate 6 as written, and its HQL
+  is stricter. For example, compare booleans with `true`/`false` rather than `1`/`0`.
+* Spring 7 resolves autowiring by parameter name only from `-parameters` metadata, so compile with that flag if you rely on it.
+
+### `dao-hibernate`: update and save semantics
+
+Hibernate 7 removed `Session.save()`, `update()`, `saveOrUpdate()`, `delete()` and `load()`, and can no longer
+reattach a detached object to a session. The Hibernate DAOs now behave like the JPA DAOs:
+
+* Saving an entity that already exists in the database (`GenericDAO.save()`, `GeneralDAO.save()`, `update()`)
+  **merges** it: its state is copied onto the managed instance, and the object you passed in stays detached.
+  Changes made to that object afterwards are not saved unless you save it again. New entities are persisted and
+  do become managed, as before.
+* Re-saving an entity whose generated id is already set still inserts a new row with a new id, as `save()` did.
+* `refresh()` of a detached entity loads its current state and attaches it. It fails if the session already
+  holds another instance with the same id.
+
 # Maven Installation
 
 TBD

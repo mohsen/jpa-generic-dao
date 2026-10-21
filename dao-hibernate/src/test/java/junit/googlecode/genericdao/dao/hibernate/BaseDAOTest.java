@@ -22,11 +22,8 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.ObjectNotFoundException;
 import org.hibernate.SessionFactory;
-import org.hibernate.engine.spi.SessionImplementor;
+import org.hibernate.Session;
 import org.hibernate.proxy.HibernateProxy;
-import org.hibernate.proxy.pojo.javassist.JavassistLazyInitializer;
-import org.hibernate.type.AnyType;
-import org.hibernate.type.StandardBasicTypes;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -100,7 +97,8 @@ public class BaseDAOTest extends BaseTest {
 		fred.setFirstName("Fred");
 		target.update(fred);
 
-		assertTrue(target.sessionContains(fred));
+		// update() merges (Hibernate 7 cannot reattach), so fred itself stays detached
+		assertFalse(target.sessionContains(fred));
 
 		assertEquals("The change should be made.", "Fred", target.get(Person.class, joeA.getId()).getFather()
 				.getFirstName());
@@ -111,14 +109,12 @@ public class BaseDAOTest extends BaseTest {
 		s.setResultMode(Search.RESULT_SINGLE);
 		s.addFilterEqual("id", joeA.getId());
 
-		assertEquals("The change should be made.", "Santos", target.searchUnique(s));
+		assertEquals("Changes to the detached object after update() should not be saved.", "Alpha", target.searchUnique(s));
 
+		// merging another detached copy with the same identifier is allowed and overwrites the state
 		Person otherFred = copy(papaA);
-		try {
-			target.update(otherFred);
-			fail("Should throw exception when there is a persistent instance with the same identifier.");
-		} catch (HibernateException e) {
-		}
+		target.update(otherFred);
+		assertEquals("Papa", target.get(Person.class, joeA.getId()).getFather().getFirstName());
 	}
 	
 	@Test
@@ -131,28 +127,23 @@ public class BaseDAOTest extends BaseTest {
 
 			// When working with 2 different session, the session.contains(entity) returns false
 			// see in _exists(Object entity) in HibernateBaseDAO
-			SessionImplementor openSession = (SessionImplementor) sessionFactory.openSession();
-			
-			Address proxy = (Address) JavassistLazyInitializer.getProxy(
-					Address.class.getName(),
-					Address.class,
-					new Class[] { HibernateProxy.class },
-					Address.class.getMethod("getId"),
-					Address.class.getMethod("setId", Long.class),
-					new AnyType(StandardBasicTypes.LONG, StandardBasicTypes.SERIALIZABLE),
-					id,
-					openSession
-			);
+			Session openSession = sessionFactory.openSession();
+			try {
+				Address proxy = openSession.getReference(Address.class, id);
+				assertTrue("expected an uninitialized proxy", proxy instanceof HibernateProxy);
 
+				// If this is not working properly, this will throw an error
+				target.saveOrUpdateIsNew(proxy);
+				
+				//So will this
+				Address address2 = target.get(proxy.getClass(), id);
 
-			// If this is not working properly, this will throw an error
-			target.saveOrUpdateIsNew(proxy);
-			
-			//So will this
-			Address address2 = target.get(proxy.getClass(), id);
-
-			assertEquals("update on the proxy should work ", proxy.getCity(),
-					address2.getCity());
+				// the proxy stays bound to the other session, which cannot see this transaction's rows
+				assertEquals("update on the proxy should work ", address.getCity(),
+						address2.getCity());
+			} finally {
+				openSession.close();
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -402,8 +393,10 @@ public class BaseDAOTest extends BaseTest {
 			people[0].setFirstName("Firstly");
 			people[1].setFirstName("Secondly");
 
+			// new entities are persisted and stay attached; existing ones are merged, so
+			// later changes to the detached objects (grandpaA, grandmaA) are not saved.
 			s.clear();
-			s.addFilterIn("firstName", "GGG3", "GGG4", "Bobby", "Firstly", "Secondly");
+			s.addFilterIn("firstName", "GGG1", "GGG2", "Bobby", "Firstly", "Secondly");
 			assertListEqual(new Person[] { grandpaA, grandmaA, bob, people[0], people[1] }, target.search(s));
 
 			// save with non-null id
@@ -459,7 +452,8 @@ public class BaseDAOTest extends BaseTest {
 
 			assertTrue(target.sessionContains(people[0]));
 			assertTrue(target.sessionContains(people[1]));
-			assertTrue(target.sessionContains(pets[0]));
+			// pets[0] existed and was detached, so it was merged rather than attached
+			assertFalse(target.sessionContains(pets[0]));
 			assertTrue(target.sessionContains(pets[1]));
 			assertTrue(target.sessionContains(pets[2]));
 			assertTrue(target.sessionContains(pets[3]));
@@ -519,10 +513,11 @@ public class BaseDAOTest extends BaseTest {
 		s.addField("id", Field.OP_MAX);
 		long maxId = (Long) target.searchUnique(s);
 
-		target.update(papaA);
-		target.update(papaB);
-		target.update(mamaA);
-		target.update(mamaB);
+		// load attached instances (update() merges and no longer attaches the given object)
+		Person attachedPapaA = target.get(Person.class, papaA.getId());
+		Person attachedPapaB = target.get(Person.class, papaB.getId());
+		Person attachedMamaA = target.get(Person.class, mamaA.getId());
+		Person attachedMamaB = target.get(Person.class, mamaB.getId());
 
 		// delete unattached
 		assertFalse(target.sessionContains(joeA));
@@ -547,24 +542,24 @@ public class BaseDAOTest extends BaseTest {
 		assertFalse(target.sessionContains(catNorman));
 
 		// delete attached
-		assertTrue(target.sessionContains(papaA));
-		assertTrue(target.sessionContains(papaB));
-		assertTrue(target.sessionContains(mamaA));
-		assertTrue(target.sessionContains(mamaB));
+		assertTrue(target.sessionContains(attachedPapaA));
+		assertTrue(target.sessionContains(attachedPapaB));
+		assertTrue(target.sessionContains(attachedMamaA));
+		assertTrue(target.sessionContains(attachedMamaB));
 
 		target.deleteById(Person.class, papaA.getId(), null, papaB.getId(), maxId + 1);
 
 		assertNull(target.get(Person.class, papaA.getId()));
-		assertFalse(target.sessionContains(papaA));
+		assertFalse(target.sessionContains(attachedPapaA));
 		assertNull(target.get(Person.class, papaB.getId()));
-		assertFalse(target.sessionContains(papaB));
+		assertFalse(target.sessionContains(attachedPapaB));
 
-		target.deleteEntities(mamaA, mamaB);
+		target.deleteEntities(attachedMamaA, attachedMamaB);
 
 		assertNull(target.get(Person.class, mamaA.getId()));
-		assertFalse(target.sessionContains(mamaA));
+		assertFalse(target.sessionContains(attachedMamaA));
 		assertNull(target.get(Person.class, mamaB.getId()));
-		assertFalse(target.sessionContains(mamaB));
+		assertFalse(target.sessionContains(attachedMamaB));
 
 	}
 

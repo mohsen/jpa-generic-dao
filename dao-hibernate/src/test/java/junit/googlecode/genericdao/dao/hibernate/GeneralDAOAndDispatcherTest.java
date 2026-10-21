@@ -237,7 +237,9 @@ public class GeneralDAOAndDispatcherTest extends BaseTest {
 		
 		assertEquals("Bobby", dao.find(bob.getClass(), bob.getId()).getFirstName());
 		
-		
+		// save() merged bob2, so the session holds a different instance for its id; clear it
+		// so that refresh() can attach bob2
+		clear();
 		dao.refresh(bob2);
 		assertTrue(dao.isAttached(bob2));
 		assertFalse(dao.isAttached(bob));

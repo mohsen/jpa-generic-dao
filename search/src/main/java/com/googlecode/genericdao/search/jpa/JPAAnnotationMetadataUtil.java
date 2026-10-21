@@ -3,7 +3,7 @@ package com.googlecode.genericdao.search.jpa;
 import java.beans.PropertyDescriptor;
 import java.io.Serializable;
 
-import javax.persistence.Entity;
+import jakarta.persistence.Entity;
 
 import org.apache.commons.beanutils.PropertyUtils;
 

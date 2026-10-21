@@ -14,7 +14,7 @@
  */
 package test.googlecode.genericdao.model;
 
-import javax.persistence.Embeddable;
+import jakarta.persistence.Embeddable;
 
 @Embeddable
 public class Ident {

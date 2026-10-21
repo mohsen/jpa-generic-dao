@@ -12,7 +12,7 @@ import java.util.Map.Entry;
 
 import org.springframework.jdbc.core.StatementCreatorUtils;
 
-import com.mysql.jdbc.Statement;
+import java.sql.Statement;
 
 public abstract class SqlStatementBuilder {
 

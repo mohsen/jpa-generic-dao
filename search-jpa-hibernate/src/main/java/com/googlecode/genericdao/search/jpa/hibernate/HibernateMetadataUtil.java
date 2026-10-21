@@ -14,12 +14,14 @@
  */
 package com.googlecode.genericdao.search.jpa.hibernate;
 
-import org.hibernate.ejb.HibernateEntityManagerFactory;
+import jakarta.persistence.EntityManagerFactory;
+
+import org.hibernate.SessionFactory;
 
 import com.googlecode.genericdao.search.MetadataUtil;
 
 public class HibernateMetadataUtil {
-	public static MetadataUtil getInstanceForEntityManagerFactory(HibernateEntityManagerFactory emf) {
-		return com.googlecode.genericdao.search.hibernate.HibernateMetadataUtil.getInstanceForSessionFactory(emf.getSessionFactory());
+	public static MetadataUtil getInstanceForEntityManagerFactory(EntityManagerFactory emf) {
+		return com.googlecode.genericdao.search.hibernate.HibernateMetadataUtil.getInstanceForSessionFactory(emf.unwrap(SessionFactory.class));
 	}
 }

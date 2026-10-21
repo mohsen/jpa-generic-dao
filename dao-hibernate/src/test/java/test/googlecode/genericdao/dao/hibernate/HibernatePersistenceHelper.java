@@ -35,7 +35,7 @@ public class HibernatePersistenceHelper implements PersistenceHelper {
 
 	@SuppressWarnings("unchecked")
 	public <T> T find(Class<T> type, Serializable id) {
-		return (T) sessionFactory.getCurrentSession().get(type, id);
+		return (T) sessionFactory.getCurrentSession().find(type, id);
 	}
 	
 	public void flush() {
@@ -52,7 +52,7 @@ public class HibernatePersistenceHelper implements PersistenceHelper {
 
 	@SuppressWarnings("unchecked")
 	public <T> T getProxy(Class<T> type, Serializable id) {
-		return (T) sessionFactory.getCurrentSession().load(type, id);
+		return sessionFactory.getCurrentSession().getReference(type, id);
 	}
 	
 	public void executeWithJdbcConnection(

@@ -175,7 +175,9 @@ public class GenericDAOTest extends BaseTest {
 		
 		assertEquals("Bobby", personDAO.find(bob.getId()).getFirstName());
 		
-		
+		// save() merged bob2, so the session holds a different instance for its id; clear it
+		// so that refresh() can attach bob2
+		clear();
 		personDAO.refresh(bob2);
 		assertTrue(personDAO.isAttached(bob2));
 		assertFalse(personDAO.isAttached(bob));
